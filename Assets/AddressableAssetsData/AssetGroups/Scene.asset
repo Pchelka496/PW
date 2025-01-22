@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Scene
+  m_EditorClassIdentifier: 
+  m_GroupName: Scene
+  m_GUID: b3e3dc8db02730d43971cc358b539af2
+  m_SerializeEntries:
+  - m_GUID: 0baec75b34aba1e46b95dd25bc9fb390
+    m_Address: Assets/Resources_moved/Scene/CompanyMap.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99c9720ab356a0642a771bea13969a05
+    m_Address: Assets/Resources_moved/Scene/OpenWorld.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e00393abc6ec50a46beb60a7bece479e
+    m_Address: Assets/Resources_moved/Scene/CreatingConstruct.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 99ce85e8adb72044c816c59fe5a53bd7, type: 2}
+    - {fileID: 11400000, guid: 936f7b35436df09419a20b726feca582, type: 2}

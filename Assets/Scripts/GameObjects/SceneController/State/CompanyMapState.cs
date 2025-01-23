@@ -15,7 +15,11 @@ namespace GameObjects.SceneController.State
         public override async UniTask OnEnter(ISceneState previousState, ISceneState[] allState)
         {
             await base.OnEnter(previousState, allState);
+            PreparationAnyState(allState).Forget();
+        }
 
+        private async UniTask PreparationAnyState(ISceneState[] allState)
+        {
             foreach (var state in allState)
             {
                 switch (state)
@@ -27,7 +31,7 @@ namespace GameObjects.SceneController.State
 
                         break;
                     }
-                    case CreatingConstructState creatingConstructState:
+                    case WorkshopState creatingConstructState:
                     {
                         await creatingConstructState.OnPreparation(this, allState);
                         _preparedStates.Add(creatingConstructState);
@@ -38,7 +42,7 @@ namespace GameObjects.SceneController.State
             }
 
             await UniTask.WaitForEndOfFrame();
-            
+
             foreach (var state in allState)
             {
                 if (state == this) continue;
@@ -50,13 +54,13 @@ namespace GameObjects.SceneController.State
         {
             await base.OnExit(nextState, allState);
 
-            foreach (var state in _preparedStates)
-            {
-                if (state == nextState) continue;
-                state.UnloadScene();
-            }
-
+            var preparedStatesCopy = new List<ISceneState>(_preparedStates);
             _preparedStates.Clear();
+
+            foreach (var state in preparedStatesCopy)
+            {
+                state.UnloadScene().Forget();
+            }
         }
     }
 }

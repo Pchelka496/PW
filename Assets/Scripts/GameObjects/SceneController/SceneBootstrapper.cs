@@ -1,30 +1,25 @@
-using System;
 using Cysharp.Threading.Tasks;
 using GameObjects.SceneController.State;
 using Nenn.InspectorEnhancements.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace GameObjects.SceneController
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneBootstrapper : MonoBehaviour
     {
-        [Header("Configuration")] 
-        [SerializeField] SceneControllerConfig _sceneControllerConfig;
+        [Header("Configuration")] [SerializeField]
+        SceneControllerConfig _sceneControllerConfig;
 
-        [Header("Scene loading time")] 
-        [SerializeField] float _openWorldScenePreparationTime;
-        [SerializeField] float _createConstructScenePreparationTime;
-        [SerializeField] float _companyMapScenePreparationTime;
-
-        static SceneLoader _sceneLoader;
+        static SceneBootstrapper _sceneBootstrapper;
 
         private void Awake()
         {
-            if (_sceneLoader == null)
+            transform.parent = null;
+
+            if (_sceneBootstrapper == null)
             {
-                _sceneLoader = this;
+                _sceneBootstrapper = this;
                 DontDestroyOnLoad(gameObject);
 
                 InitializeSceneController().Forget();
@@ -37,13 +32,26 @@ namespace GameObjects.SceneController
 
         private async UniTask InitializeSceneController()
         {
-            var currentScene = SceneManager.GetActiveScene();
+            var scene = SceneManager.GetActiveScene();
 
             SceneController.Initialize(_sceneControllerConfig);
             await SetCompanyMapScene();
 
-            SceneManager.UnloadSceneAsync(currentScene);
+            await UniTask.WaitForEndOfFrame();
+
+            SceneManager.UnloadSceneAsync(scene).ToUniTask().Forget();
         }
+
+//#if UNITY_EDITOR
+        [Header("Scene loading time")] [SerializeField]
+        // ReSharper disable once NotAccessedField.Local
+        float _openWorldScenePreparationTime;
+        
+        // ReSharper disable once NotAccessedField.Local
+        [SerializeField] float _createConstructScenePreparationTime;
+
+        // ReSharper disable once NotAccessedField.Local
+        [SerializeField] float _companyMapScenePreparationTime;
 
         [MethodButton]
         public void LoadOpenWorldScene()
@@ -54,7 +62,7 @@ namespace GameObjects.SceneController
         }
 
         [MethodButton]
-        public async UniTask SetOpenWorldScene() 
+        public async UniTask SetOpenWorldScene()
         {
             var startTime = Time.realtimeSinceStartup;
             await SceneController.SetState<OpenWorldState>();
@@ -65,15 +73,15 @@ namespace GameObjects.SceneController
         public void LoadCreateConstructScene()
         {
             var startTime = Time.realtimeSinceStartup;
-            SceneController.PreparationState<CreatingConstructState>().Forget();
+            SceneController.PreparationState<WorkshopState>().Forget();
             _createConstructScenePreparationTime = Time.realtimeSinceStartup - startTime;
         }
 
         [MethodButton]
-        public async UniTask SetCreateConstructScene() 
+        public async UniTask SetCreateConstructScene()
         {
             var startTime = Time.realtimeSinceStartup;
-            await SceneController.SetState<CreatingConstructState>();
+            await SceneController.SetState<WorkshopState>();
             _createConstructScenePreparationTime = Time.realtimeSinceStartup - startTime;
         }
 
@@ -86,11 +94,12 @@ namespace GameObjects.SceneController
         }
 
         [MethodButton]
-        public async UniTask SetCompanyMapScene() 
+        public async UniTask SetCompanyMapScene()
         {
             var startTime = Time.realtimeSinceStartup;
             await SceneController.SetState<CompanyMapState>();
             _companyMapScenePreparationTime = Time.realtimeSinceStartup - startTime;
         }
+//#endif
     }
 }

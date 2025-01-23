@@ -1,15 +1,11 @@
 using Cysharp.Threading.Tasks;
 using Interfaces;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.SceneManagement;
 
 namespace GameObjects.SceneController.State
 {
-    public class CreatingConstructState : BaseSceneState
+    public class WorkshopState : BaseSceneState
     {
-        public CreatingConstructState(string sceneAddress) : base(sceneAddress)
+        public WorkshopState(string sceneAddress) : base(sceneAddress)
         {
         }
 
@@ -20,7 +16,7 @@ namespace GameObjects.SceneController.State
             foreach (var state in allState)
             {
                 if (state == this) continue;
-                state.UnloadScene();
+                state.UnloadScene().Forget();
             }
 
             EnableAllObjectsInScene();

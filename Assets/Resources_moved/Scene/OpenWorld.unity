@@ -347,9 +347,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneControllerConfig: {fileID: 11400000, guid: 45bcd4a129c4b0249965ecf6291b02e0, type: 2}
-  OpenWorldScenePreparationTime: 0
-  CreateConstructScenePreparationTime: 0
-  CompanyMapScenePreparationTime: 0
+  _openWorldScenePreparationTime: 0
+  _createConstructScenePreparationTime: 0
+  _companyMapScenePreparationTime: 0
 --- !u!4 &578840331
 Transform:
   m_ObjectHideFlags: 0
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _SceneAsset: {fileID: 102900000, guid: 8cd4a3351c074454fb58510a1c6cdd46, type: 3}
   _HierarchyColor: {r: 0.6913667, g: 0, b: 1, a: 1}
-  AutoLoadScene: 1
+  AutoLoadScene: 0
   _SceneGUID:
     Value:
       x: 1396329928

@@ -16,7 +16,7 @@ namespace GameObjects.SceneController.State
             foreach (var state in allState)
             {
                 if (state == this) continue;
-                state.UnloadScene();
+                await state.UnloadScene();
             }
 
             EnableAllObjectsInScene();

@@ -30,7 +30,7 @@ namespace GameObjects.SceneController
             {
                 new OpenWorldState(_config.OpenWorld),
                 new CompanyMapState(_config.CompanyMap),
-                new CreatingConstructState(_config.CreatingConstruct)
+                new WorkshopState(_config.CreatingConstruct)
             };
         }
 

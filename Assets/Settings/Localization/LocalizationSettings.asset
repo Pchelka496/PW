@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63817d93022759543b57e795c78efe11, type: 3}
+  m_Name: LocalizationSettings
+  m_EditorClassIdentifier: 
+  TableId: 1Gw-GLIo3qMQdbWFFHv6EgCSxe2JZS976Z-0Cp42-pjc
+  Sheets:
+  - Name: English
+    Id: 0
+    TextAsset: {fileID: 4900000, guid: 97c3dcfc7d748354eb16b01a428add46, type: 3}
+  - Name: Russian
+    Id: 1249913466
+    TextAsset: {fileID: 4900000, guid: 819ec7345a71d904e95bdb0ef29aec60, type: 3}
+  - Name: Ukrainian
+    Id: 514217666
+    TextAsset: {fileID: 4900000, guid: 219922770de0590468b374784aff743e, type: 3}
+  - Name: Chinese
+    Id: 612549581
+    TextAsset: {fileID: 4900000, guid: 0498823b8925b6947b6cc398db777ca4, type: 3}
+  - Name: French
+    Id: 1088259401
+    TextAsset: {fileID: 4900000, guid: 75fbe24811e03e542ad1d3ef067a734a, type: 3}
+  - Name: German
+    Id: 455041753
+    TextAsset: {fileID: 4900000, guid: a813586ce614e0f46a59a641a3566fbb, type: 3}
+  - Name: 'Polish '
+    Id: 2059936350
+    TextAsset: {fileID: 4900000, guid: 6e43d08144937c34bbd17efe49990f7b, type: 3}
+  SaveFolder: {fileID: 102900000, guid: 948b54562a6eaa14dbdf3635697a72ff, type: 3}

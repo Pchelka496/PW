@@ -46,7 +46,7 @@ namespace GameObjects.SceneController
         [Header("Scene loading time")] [SerializeField]
         // ReSharper disable once NotAccessedField.Local
         float _openWorldScenePreparationTime;
-        
+
         // ReSharper disable once NotAccessedField.Local
         [SerializeField] float _createConstructScenePreparationTime;
 

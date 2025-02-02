@@ -15,7 +15,7 @@
                     "name": "CameraAnyMovement",
                     "type": "Value",
                     "id": "1ffa4253-de97-4db7-9bcc-cbd65c9d7e49",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -30,6 +30,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "CameraMouseMovement",
+                    "type": "Value",
+                    "id": "0cc63e1d-a972-451b-b8fe-8007435e7cfa",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "CameraMouseMovementMode",
                     "type": "Button",
                     "id": "986d45ed-649e-4aed-93c8-eabe89da9880",
@@ -37,22 +46,13 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "CameraMouseMovement",
-                    "type": "Value",
-                    "id": "0cc63e1d-a972-451b-b8fe-8007435e7cfa",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "Arrow",
                     "id": "0e15712d-60c4-4c7c-b812-4d463882ae35",
-                    "path": "2DVector",
+                    "path": "3DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -61,9 +61,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
+                    "name": "Up",
                     "id": "cd53afc5-ec35-4772-bcaa-7995b6f045c2",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -72,9 +72,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
+                    "name": "Down",
                     "id": "7906e288-0ca4-4692-bd4c-caff64723583",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -83,7 +83,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
+                    "name": "Left",
                     "id": "141a962a-f655-4bb9-8669-a11377516b69",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
@@ -94,9 +94,31 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
+                    "name": "Right",
                     "id": "a4d0fc41-b5d0-4718-ab94-a9d792475d73",
                     "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraAnyMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Forward",
+                    "id": "bd8929c1-83ad-49e0-92be-9274cc2ddac4",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraAnyMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Backward",
+                    "id": "4d79d8e2-e61c-4014-9029-e24e8c4384f9",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -129,7 +151,7 @@
                 {
                     "name": "Mouse",
                     "id": "356a5570-11e5-4a48-aafc-38b6b26bf5de",
-                    "path": "2DVector",
+                    "path": "3DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -138,7 +160,29 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
+                    "name": "Up",
+                    "id": "758d4662-ade5-4980-aecf-40d7178d659e",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraMouseMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "6649dbb5-c501-45a9-bc39-9f9290859004",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraMouseMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Forward",
                     "id": "0806f37f-b0a1-401c-9c3a-15bac7b4b23a",
                     "path": "<Mouse>/delta/up",
                     "interactions": "",
@@ -149,7 +193,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
+                    "name": "Backward",
                     "id": "a12f6d5a-e77d-4ba4-af04-b41bc507db2f",
                     "path": "<Mouse>/delta/down",
                     "interactions": "",
@@ -160,7 +204,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
+                    "name": "Left",
                     "id": "159f39a4-c29e-47e7-ae93-2b4dbb9eed1b",
                     "path": "<Mouse>/delta/left",
                     "interactions": "",
@@ -171,7 +215,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
+                    "name": "Right",
                     "id": "1c8507dc-21e6-4574-aab1-1771709030f9",
                     "path": "<Mouse>/delta/right",
                     "interactions": "",

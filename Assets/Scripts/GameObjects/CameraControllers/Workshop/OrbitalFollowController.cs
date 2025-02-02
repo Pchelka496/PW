@@ -18,6 +18,8 @@ namespace GameObjects.CameraControllers.Workshop
         InputAxisControllerBase<CinemachineInputAxisController.Reader>.Controller _lookOrbitY;
         InputAxisControllerBase<CinemachineInputAxisController.Reader>.Controller _orbitScale;
 
+        bool _viewMode;
+        CamaraMovingController _camaraMovingController = CamaraMovingController.NonControl;
         event Action SubscribeAllEvents;
         event Action DisposeEvents;
 
@@ -30,26 +32,24 @@ namespace GameObjects.CameraControllers.Workshop
         private void InitializeEvents(Controls controls)
         {
             SubscribeAllEvents += () =>
-            {
-                if (controls != null)
-                    controls.Workshop.ActiveLookMode.started += OnLookModeEnable;
-            };
-            SubscribeAllEvents += () =>
-            {
-                if (controls != null)
-                    controls.Workshop.ActiveLookMode.canceled += OnLookModeDisabled;
-            };
+                controls.Workshop.ActiveLookMode.started += OnLookModeEnable;
+            DisposeEvents += () =>
+                controls.Workshop.ActiveLookMode.started -= OnLookModeEnable;
 
+            SubscribeAllEvents += () =>
+                controls.Workshop.ActiveLookMode.canceled += OnLookModeDisabled;
             DisposeEvents += () =>
-            {
-                if (controls != null)
-                    controls.Workshop.ActiveLookMode.started -= OnLookModeEnable;
-            };
+                controls.Workshop.ActiveLookMode.canceled -= OnLookModeDisabled;
+
+            SubscribeAllEvents += () =>
+                controls.Workshop.CameraMouseMovementMode.started += OnCameraMovementMouseMovementStarted;
             DisposeEvents += () =>
-            {
-                if (controls != null)
-                    controls.Workshop.ActiveLookMode.canceled -= OnLookModeDisabled;
-            };
+                controls.Workshop.CameraMouseMovementMode.started -= OnCameraMovementMouseMovementStarted;
+
+            SubscribeAllEvents += () =>
+                controls.Workshop.CameraMouseMovementMode.canceled += OnCameraMouseMovementEnd;
+            DisposeEvents += () =>
+                controls.Workshop.CameraMouseMovementMode.canceled -= OnCameraMouseMovementEnd;
         }
 
         private void Awake()
@@ -90,20 +90,54 @@ namespace GameObjects.CameraControllers.Workshop
 
         private void OnLookModeEnable(InputAction.CallbackContext contex)
         {
+            _viewMode = true;
+            switch (_camaraMovingController)
+            {
+                case CamaraMovingController.Mouse:
+                    return;
+            }
+
             _lookOrbitX.Enabled = true;
             _lookOrbitY.Enabled = true;
         }
 
         private void OnLookModeDisabled(InputAction.CallbackContext contex)
         {
+            _viewMode = false;
+
             _lookOrbitX.Enabled = false;
             _lookOrbitY.Enabled = false;
+        }
+
+        private void OnCameraMovementMouseMovementStarted(InputAction.CallbackContext contex)
+        {
+            _camaraMovingController = CamaraMovingController.Mouse;
+            CursorManager.LockCursor();
+            
+            OnLookModeDisabled(contex);
+        }
+
+        private void OnCameraMouseMovementEnd(InputAction.CallbackContext contex)
+        {
+            _camaraMovingController = CamaraMovingController.NonControl;
+            CursorManager.UnlockCursor();
+            
+            if (_viewMode)
+            {
+                OnLookModeEnable(contex);
+            }
         }
 
         private void Reset()
         {
             gameObject.TryGetComponent<CinemachineOrbitalFollow>(out _orbitalFollow);
             gameObject.TryGetComponent<CinemachineInputAxisController>(out _inputAxisController);
+        }
+
+        private enum CamaraMovingController
+        {
+            Mouse,
+            NonControl
         }
     }
 }

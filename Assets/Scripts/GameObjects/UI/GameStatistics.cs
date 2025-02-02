@@ -1,4 +1,3 @@
-using System;
 using Nenn.InspectorEnhancements.Runtime.Attributes;
 using TMPro;
 using UnityEngine;
@@ -7,10 +6,9 @@ namespace GameObjects.UI
 {
     public class GameStatistics : MonoBehaviour
     {
-        [Required]
-        [SerializeField] TextMeshProUGUI _averageFpsTextMeshPro;
+        [Required] [SerializeField] TextMeshProUGUI _averageFpsTextMeshPro;
         [SerializeField] int _frameRange = 60;
-        
+
         float _deltaTime;
         float _totalDeltaTime;
         int _frameCount;
@@ -18,9 +16,26 @@ namespace GameObjects.UI
         int[] _fpsBuffer;
         int _fpsBufferIndex;
 
-        public int AverageFPS { get; private set; }
+        public int AverageFPS { get; set; }
         public int HighestPfs { get; private set; }
         public int LowersFPS { get; private set; }
+
+        static GameStatistics _gameStatistics;
+
+        private void Awake()
+        {
+            transform.parent = null;
+
+            if (_gameStatistics == null)
+            {
+                _gameStatistics = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Update()
         {

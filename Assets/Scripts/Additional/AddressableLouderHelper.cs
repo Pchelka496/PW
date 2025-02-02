@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,7 +9,8 @@ namespace Additional
 {
     public static class AddressableLouderHelper
     {
-        public static async UniTask<LoadOperationData<T>> LoadAssetAsync<T>(AssetReference reference)
+        public static async UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(
+            AssetReference reference)
         {
             if (reference == null)
             {
@@ -21,7 +24,7 @@ namespace Additional
 
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                return new(handle, handle.Result);
+                return handle;
             }
             else
             {
@@ -30,7 +33,8 @@ namespace Additional
             }
         }
 
-        public static async UniTask<LoadOperationData<T>> LoadAssetAsync<T>(string address)
+        public static async UniTask<AsyncOperationHandle<T>> LoadAssetAsync<T>(
+            string address)
         {
             if (address == null)
             {
@@ -44,7 +48,7 @@ namespace Additional
 
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                return new(handle, handle.Result);
+                return handle;
             }
             else
             {
@@ -53,16 +57,41 @@ namespace Additional
             }
         }
 
-        public readonly struct LoadOperationData<T>
+        public static async UniTask<AsyncOperationHandle<IList<T>>> LoadAssetsAsync<T>(
+            string address)
         {
-            public readonly AsyncOperationHandle<T> Handle;
-            public readonly T LoadAsset;
-
-            public LoadOperationData(AsyncOperationHandle<T> handle, T loadAsset)
+            if (address == null)
             {
-                Handle = handle;
-                LoadAsset = loadAsset;
+                Debug.LogError("Address is null");
+                return default;
             }
+
+            var handle = Addressables.LoadAssetsAsync<T>(address);
+
+            await handle;
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                return handle;
+            }
+            else
+            {
+                Debug.LogError($"Error loading via Addressable. Asset Address - {address}");
+                return default;
+            }
+        }
+
+        public static AsyncOperationHandle<IList<T>> LoadAssets<T>(string address, Action<T> callback)
+        {
+            if (address == null)
+            {
+                Debug.LogError("Address is null");
+                return default;
+            }
+
+            var handle = Addressables.LoadAssetsAsync<T>(address, callback);
+
+            return handle;
         }
     }
 }

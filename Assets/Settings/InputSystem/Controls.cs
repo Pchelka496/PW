@@ -38,7 +38,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""CameraAnyMovement"",
                     ""type"": ""Value"",
                     ""id"": ""1ffa4253-de97-4db7-9bcc-cbd65c9d7e49"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -53,6 +53,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""CameraMouseMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""0cc63e1d-a972-451b-b8fe-8007435e7cfa"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""CameraMouseMovementMode"",
                     ""type"": ""Button"",
                     ""id"": ""986d45ed-649e-4aed-93c8-eabe89da9880"",
@@ -60,22 +69,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""CameraMouseMovement"",
-                    ""type"": ""Value"",
-                    ""id"": ""0cc63e1d-a972-451b-b8fe-8007435e7cfa"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": ""Arrow"",
                     ""id"": ""0e15712d-60c4-4c7c-b812-4d463882ae35"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""3DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -84,9 +84,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""Up"",
                     ""id"": ""cd53afc5-ec35-4772-bcaa-7995b6f045c2"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -95,9 +95,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
+                    ""name"": ""Down"",
                     ""id"": ""7906e288-0ca4-4692-bd4c-caff64723583"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -106,7 +106,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
+                    ""name"": ""Left"",
                     ""id"": ""141a962a-f655-4bb9-8669-a11377516b69"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
@@ -117,9 +117,31 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
+                    ""name"": ""Right"",
                     ""id"": ""a4d0fc41-b5d0-4718-ab94-a9d792475d73"",
                     ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraAnyMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Forward"",
+                    ""id"": ""bd8929c1-83ad-49e0-92be-9274cc2ddac4"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraAnyMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Backward"",
+                    ""id"": ""4d79d8e2-e61c-4014-9029-e24e8c4384f9"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -152,7 +174,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Mouse"",
                     ""id"": ""356a5570-11e5-4a48-aafc-38b6b26bf5de"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""3DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -161,7 +183,29 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
+                    ""name"": ""Up"",
+                    ""id"": ""758d4662-ade5-4980-aecf-40d7178d659e"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMouseMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""6649dbb5-c501-45a9-bc39-9f9290859004"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMouseMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Forward"",
                     ""id"": ""0806f37f-b0a1-401c-9c3a-15bac7b4b23a"",
                     ""path"": ""<Mouse>/delta/up"",
                     ""interactions"": """",
@@ -172,7 +216,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
+                    ""name"": ""Backward"",
                     ""id"": ""a12f6d5a-e77d-4ba4-af04-b41bc507db2f"",
                     ""path"": ""<Mouse>/delta/down"",
                     ""interactions"": """",
@@ -183,7 +227,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
+                    ""name"": ""Left"",
                     ""id"": ""159f39a4-c29e-47e7-ae93-2b4dbb9eed1b"",
                     ""path"": ""<Mouse>/delta/left"",
                     ""interactions"": """",
@@ -194,7 +238,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
+                    ""name"": ""Right"",
                     ""id"": ""1c8507dc-21e6-4574-aab1-1771709030f9"",
                     ""path"": ""<Mouse>/delta/right"",
                     ""interactions"": """",
@@ -792,8 +836,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Workshop = asset.FindActionMap("Workshop", throwIfNotFound: true);
         m_Workshop_CameraAnyMovement = m_Workshop.FindAction("CameraAnyMovement", throwIfNotFound: true);
         m_Workshop_ActiveLookMode = m_Workshop.FindAction("ActiveLookMode", throwIfNotFound: true);
-        m_Workshop_CameraMouseMovementMode = m_Workshop.FindAction("CameraMouseMovementMode", throwIfNotFound: true);
         m_Workshop_CameraMouseMovement = m_Workshop.FindAction("CameraMouseMovement", throwIfNotFound: true);
+        m_Workshop_CameraMouseMovementMode = m_Workshop.FindAction("CameraMouseMovementMode", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -914,16 +958,16 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IWorkshopActions> m_WorkshopActionsCallbackInterfaces = new List<IWorkshopActions>();
     private readonly InputAction m_Workshop_CameraAnyMovement;
     private readonly InputAction m_Workshop_ActiveLookMode;
-    private readonly InputAction m_Workshop_CameraMouseMovementMode;
     private readonly InputAction m_Workshop_CameraMouseMovement;
+    private readonly InputAction m_Workshop_CameraMouseMovementMode;
     public struct WorkshopActions
     {
         private @Controls m_Wrapper;
         public WorkshopActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @CameraAnyMovement => m_Wrapper.m_Workshop_CameraAnyMovement;
         public InputAction @ActiveLookMode => m_Wrapper.m_Workshop_ActiveLookMode;
-        public InputAction @CameraMouseMovementMode => m_Wrapper.m_Workshop_CameraMouseMovementMode;
         public InputAction @CameraMouseMovement => m_Wrapper.m_Workshop_CameraMouseMovement;
+        public InputAction @CameraMouseMovementMode => m_Wrapper.m_Workshop_CameraMouseMovementMode;
         public InputActionMap Get() { return m_Wrapper.m_Workshop; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -939,12 +983,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ActiveLookMode.started += instance.OnActiveLookMode;
             @ActiveLookMode.performed += instance.OnActiveLookMode;
             @ActiveLookMode.canceled += instance.OnActiveLookMode;
-            @CameraMouseMovementMode.started += instance.OnCameraMouseMovementMode;
-            @CameraMouseMovementMode.performed += instance.OnCameraMouseMovementMode;
-            @CameraMouseMovementMode.canceled += instance.OnCameraMouseMovementMode;
             @CameraMouseMovement.started += instance.OnCameraMouseMovement;
             @CameraMouseMovement.performed += instance.OnCameraMouseMovement;
             @CameraMouseMovement.canceled += instance.OnCameraMouseMovement;
+            @CameraMouseMovementMode.started += instance.OnCameraMouseMovementMode;
+            @CameraMouseMovementMode.performed += instance.OnCameraMouseMovementMode;
+            @CameraMouseMovementMode.canceled += instance.OnCameraMouseMovementMode;
         }
 
         private void UnregisterCallbacks(IWorkshopActions instance)
@@ -955,12 +999,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @ActiveLookMode.started -= instance.OnActiveLookMode;
             @ActiveLookMode.performed -= instance.OnActiveLookMode;
             @ActiveLookMode.canceled -= instance.OnActiveLookMode;
-            @CameraMouseMovementMode.started -= instance.OnCameraMouseMovementMode;
-            @CameraMouseMovementMode.performed -= instance.OnCameraMouseMovementMode;
-            @CameraMouseMovementMode.canceled -= instance.OnCameraMouseMovementMode;
             @CameraMouseMovement.started -= instance.OnCameraMouseMovement;
             @CameraMouseMovement.performed -= instance.OnCameraMouseMovement;
             @CameraMouseMovement.canceled -= instance.OnCameraMouseMovement;
+            @CameraMouseMovementMode.started -= instance.OnCameraMouseMovementMode;
+            @CameraMouseMovementMode.performed -= instance.OnCameraMouseMovementMode;
+            @CameraMouseMovementMode.canceled -= instance.OnCameraMouseMovementMode;
         }
 
         public void RemoveCallbacks(IWorkshopActions instance)
@@ -1148,8 +1192,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnCameraAnyMovement(InputAction.CallbackContext context);
         void OnActiveLookMode(InputAction.CallbackContext context);
-        void OnCameraMouseMovementMode(InputAction.CallbackContext context);
         void OnCameraMouseMovement(InputAction.CallbackContext context);
+        void OnCameraMouseMovementMode(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

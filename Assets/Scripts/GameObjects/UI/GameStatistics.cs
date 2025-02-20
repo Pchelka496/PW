@@ -24,7 +24,7 @@ namespace GameObjects.UI
 
         private void Awake()
         {
-            transform.parent = null;
+            transform.SetParent(null);
 
             if (_gameStatistics == null)
             {

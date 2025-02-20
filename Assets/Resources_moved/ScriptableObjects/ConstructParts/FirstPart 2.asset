@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dfbe0702833c724ba514f7ab30db08a, type: 3}
+  m_Name: FirstPart 2
+  m_EditorClassIdentifier: 
+  _prefabReference:
+    m_AssetGUID: c3f4a0da7c321234dbcaed734cabe7e3
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  _partName: 2
+  _mass: 50
+  _shopType: 2
+  _cost: 1275
+  _localPositionForRenderTexture: {x: 0, y: 0, z: 2}
+  _rotationForRenderTexture: {x: 0, y: 0, z: 0, w: 0}

@@ -10,9 +10,9 @@ public class LocalizationLoader
     private Dictionary<string, string> currentLocalization = new Dictionary<string, string>();
     
 
-    public async UniTask<Dictionary<string, string>> GetLocalizationDictionary(string language)//format ISO 639-1
-    {
-        //cvs
-        return currentLocalization;
-    }
+    // public UniTask<Dictionary<string, string>> GetLocalizationDictionary(string language)//format ISO 639-1
+    // {
+    //     //cvs
+    //     //return currentLocalization;
+    // }
 }

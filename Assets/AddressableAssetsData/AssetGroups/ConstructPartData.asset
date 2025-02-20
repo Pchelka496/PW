@@ -15,10 +15,60 @@ MonoBehaviour:
   m_GroupName: ConstructPartData
   m_GUID: b954555d44925de48b58f42085020e4e
   m_SerializeEntries:
+  - m_GUID: 0cba263b0eb32164ba6083abf1c475fc
+    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
+      2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ConstructPartData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 618e771be974f374588df5588ba61c69
     m_Address: Assets/ScriptableObjects/ConstructParts/FirstPart.asset
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - ConstructPartData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cc50a540dff88647a80d68c58d0d3f0
+    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
+      7.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ConstructPartData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d5f13ef2efccaa489b32c4e512e73b6
+    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
+      1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ConstructPartData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 875c5543e70e8554ea5ba09d7471ced0
+    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
+      3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ConstructPartData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 976e4f4e2077bab48853ea1aec7f811b
+    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
+      5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ConstructPartData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a97f67d1841cc3b40bf89c3fbfcb894d
+    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
+      6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ConstructPartData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afebaac9f5130cc4ea76387f5c32893b
+    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
+      4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ConstructPartData
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}

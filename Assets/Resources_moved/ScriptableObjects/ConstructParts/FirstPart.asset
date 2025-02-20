@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dfbe0702833c724ba514f7ab30db08a, type: 3}
   m_Name: FirstPart
   m_EditorClassIdentifier: 
-  _prefab:
-    m_AssetGUID: 
+  _prefabReference:
+    m_AssetGUID: c3f4a0da7c321234dbcaed734cabe7e3
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  _partName: fd
+  _mass: 50
+  _shopType: 2
+  _cost: 1275
+  _localPositionForRenderTexture: {x: 0, y: 0, z: 2}
+  _rotationForRenderTexture: {x: 0, y: 0, z: 0, w: 0}

@@ -1,33 +1,72 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
+using Cysharp.Threading.Tasks;
+using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace GameObjects.Construct
 {
     public class ConstructPartsDataLoader
     {
-        const string CONSTRUCT_PARTS_GROUP_NAME = "ConstructPartData";
-        AsyncOperationHandle<IList<ScriptableObject>> _partsDataHandle;
-        
-        private AsyncOperationHandle<IList<ScriptableObject>> LoadConstructParts(Action<ScriptableObject> callback)
-        {
-            if (_partsDataHandle.Status == AsyncOperationStatus.Succeeded)
-            {
-                UnloadConstructParts();
-                Debug.LogWarning($"Reload construct parts data");
-            }
+        const string CONSTRUCT_PARTS_LABEL = "ConstructPartData";
+        AsyncLazy<ConstructPartData[]> _lazyParts;
 
-            _partsDataHandle =
-                Additional.AddressableLouderHelper.LoadAssets<ScriptableObject>(CONSTRUCT_PARTS_GROUP_NAME, callback);
-            
-            return _partsDataHandle;
+        private void CheckAndInitializeLazy()
+        {
+            if (_lazyParts == null)
+            {
+                _lazyParts = new AsyncLazy<ConstructPartData[]>(LoadPartsAsync);
+            }
         }
 
-        private void UnloadConstructParts()
+        public async UniTask<int> GetAllDataCount()
         {
-            Addressables.Release(_partsDataHandle);
+            CheckAndInitializeLazy();
+
+            var parts = await _lazyParts;
+            return parts.Length;
+        }
+
+        public async UniTaskVoid LoadAllParts()
+        {
+            CheckAndInitializeLazy();
+
+            await _lazyParts;
+        }
+
+        private async UniTask<ConstructPartData[]> LoadPartsAsync()
+        {
+            var handle =
+                await Additional.AddressableLouderHelper.LoadAssets<ConstructPartData>(
+                    (object)CONSTRUCT_PARTS_LABEL);
+
+            var sortedParts = handle.ToArray();
+
+            for (uint i = 0; i < sortedParts.Length; i++)
+            {
+                sortedParts[i].LoadID = i;
+            }
+
+            return sortedParts;
+        }
+
+        public async UniTask LoadPartsAsync(Action<ConstructPartData> callback)
+        {
+            CheckAndInitializeLazy();
+
+            var parts = await _lazyParts;
+
+            foreach (var part in parts)
+            {
+                callback?.Invoke(part);
+            }
+        }
+
+        public async UniTask<ConstructPartData[]> GetAllPartsAsync()
+        {
+            CheckAndInitializeLazy();
+
+            return await _lazyParts;
         }
     }
 }

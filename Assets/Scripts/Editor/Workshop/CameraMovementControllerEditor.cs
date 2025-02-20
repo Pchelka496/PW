@@ -7,6 +7,7 @@ using Object = UnityEngine.Object;
 [InitializeOnLoad]
 public static class CameraBordersDrawer
 {
+    [Obsolete("Obsolete")]
     static CameraBordersDrawer()
     {
         SceneView.duringSceneGui += OnSceneGUIAlways;

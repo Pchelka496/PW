@@ -56,42 +56,27 @@ namespace Additional
                 return default;
             }
         }
-
-        public static async UniTask<AsyncOperationHandle<IList<T>>> LoadAssetsAsync<T>(
-            string address)
+        
+        public static AsyncOperationHandle<IList<T>> LoadAssets<T>(object key, Action<T> callback = null)
         {
-            if (address == null)
+            if (key == null)
             {
-                Debug.LogError("Address is null");
+                Debug.LogError("Key is null");
                 return default;
             }
 
-            var handle = Addressables.LoadAssetsAsync<T>(address);
-
-            await handle;
-
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                return handle;
-            }
-            else
-            {
-                Debug.LogError($"Error loading via Addressable. Asset Address - {address}");
-                return default;
-            }
-        }
-
-        public static AsyncOperationHandle<IList<T>> LoadAssets<T>(string address, Action<T> callback)
-        {
-            if (address == null)
-            {
-                Debug.LogError("Address is null");
-                return default;
-            }
-
-            var handle = Addressables.LoadAssetsAsync<T>(address, callback);
+            var handle = Addressables.LoadAssetsAsync<T>(key, callback);
 
             return handle;
+        }
+        
+        public static void ClearHandler<T>(ref AsyncOperationHandle<T> handle)
+        {
+            if (handle.IsValid())
+            {
+                Addressables.Release(handle);
+                handle = default;
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ namespace GameObjects.SceneController.State
         public override async UniTask OnEnter(ISceneState previousState, ISceneState[] allState)
         {
             await base.OnEnter(previousState, allState);
-            PreparationAnyState(allState).Forget();
+            //PreparationAnyState(allState).Forget();
         }
 
         private async UniTask PreparationAnyState(ISceneState[] allState)

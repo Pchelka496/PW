@@ -1,0 +1,65 @@
+#pragma kernel BrownianFractal
+
+RWTexture2D<float4> OutputTexture;
+float Time;
+float2 Resolution;
+
+float Rand(float2 n)
+{
+    return frac(sin(dot(n, float2(12.9898f, 4.1414f))) * 43758.5453f);
+}
+
+float Noise(float2 p)
+{
+    float2 ip = floor(p);
+    float2 u = frac(p);
+    u = u * u * (float2(3.0f, 3.0f) - 2.0f * u);
+
+    float res = lerp(
+        lerp(Rand(ip), Rand(ip + float2(1.0f, 0.0f)), u.x),
+        lerp(Rand(ip + float2(0.0f, 1.0f)), Rand(ip + float2(1.0f, 1.0f)), u.x), u.y);
+    return res * res;
+}
+
+float Fbm(float2 p)
+{
+    float2x2 rotation = float2x2(0.8f, -0.6f, 0.6f, 0.8f);
+    float f = 0.0f;
+    const int octaves = 4;
+    float m = 0.5f;
+
+    for (int i = 0; i < octaves; i++)
+    {
+        f += m * Noise(p);
+        p = mul(rotation, p) * 2.0f;
+        m *= 0.5f;
+    }
+    f += m * Noise(p);
+
+    return f / 0.6f;
+}
+
+float Pattern(float2 uv)
+{
+    float fbmQ = Fbm(uv);
+    float2 q = float2(fbmQ, fbmQ);
+    float fbmR = Fbm(uv + 14.0f * q + float2(1.7f, 9.2f));
+    float2 r = float2(fbmR, fbmR);
+    r += Time * 0.15f;
+    return Fbm(uv + r);
+}
+
+[numthreads(32, 18, 1)]
+void BrownianFractal(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)Resolution.x || id.y >= (uint)Resolution.y) return;
+
+    float2 uv = float2((float)id.x / Resolution.x, (float)id.y / Resolution.y);
+    uv *= 4.0;
+    float displacement = Pattern(uv);
+
+    float4 color = float4(displacement * 1.2f, 0.2f, displacement * 5.0f, 1.0f);
+    color.a = min(color.r * 0.25f, 1.0f);
+
+    OutputTexture[int2(id.x, id.y)] = color;
+}

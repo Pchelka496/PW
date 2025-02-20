@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: 972ea6c739d3234449a5456a025a1017
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: c3f4a0da7c321234dbcaed734cabe7e3
+    m_Address: Assets/Resources_moved/Prefab/Construct/Parts/Cube.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}
   m_SchemaSet:

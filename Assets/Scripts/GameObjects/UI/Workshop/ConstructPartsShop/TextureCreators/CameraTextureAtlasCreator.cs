@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Additional;
 using Cysharp.Threading.Tasks;
 
 namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
@@ -11,7 +12,6 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
     {
         readonly Queue<TextureRequest> _requestsQueue = new();
         CameraTextureCreator _textureCreator;
-
         CancellationTokenSource _cts;
 
         public void Initialize(CameraTextureCreator textureCreator)
@@ -50,46 +50,46 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
                 var request = _requestsQueue.Dequeue();
                 var objects = request.Objects;
                 var textureSize = request.TextureSize;
+                var remainingTextures = objects.Length;
 
                 var atlasSize = CalculateAtlasSize(textureSize, objects.Length);
                 var renderTexture = new RenderTexture(atlasSize.x, atlasSize.y, 0, RenderTextureFormat.ARGB32);
 
                 RenderTexture.active = renderTexture;
-
                 GL.Clear(true, true, Color.clear);
 
                 var uvRects = new Rect[objects.Length];
-
                 var xOffset = 0;
 
                 for (int i = 0; i < objects.Length; i++)
                 {
                     var objectSize = textureSize;
-
                     var localX = xOffset;
                     var localY = 0;
-
                     xOffset += objectSize.x;
 
-                    var rect = new Rect((float)localX / atlasSize.x, 0,
+                    uvRects[i] = new Rect(
+                        (float)localX / atlasSize.x, 0,
                         (float)objectSize.x / atlasSize.x, (float)objectSize.y / atlasSize.y);
-                    uvRects[i] = rect;
 
-                    var textureData = new CameraTextureCreator.RenderTextureData(
+                await UniTask.WaitForSeconds(1f, cancellationToken: token);
+                    _textureCreator.AddDataToQueue(new CameraTextureCreator.RenderTextureRequest(
                         objects[i], request.Positions[i], request.Rotations[i], objectSize, (tex, obj) =>
                         {
                             Graphics.CopyTexture(tex, 0, 0, 0, 0, objectSize.x, objectSize.y, renderTexture, 0, 0,
                                 localX, localY);
                             tex.Release();
-                        });
-
-                    _textureCreator.AddDataToQueue(textureData);
-
-                    await UniTask.Yield(token);
+                            remainingTextures--;
+                        }));
                 }
+                await UniTask.WaitUntil(() => remainingTextures == 0, cancellationToken: token);
 
-                RenderTexture.active = null;
+                await UniTask.WaitForSeconds(2f, cancellationToken: token);
+
+                Debug.Log("All textures rendered"); ///
                 request.Callback?.Invoke(renderTexture, uvRects, objects);
+                RenderTexture.active = null;
+                renderTexture = null;
             }
 
             ClearToken();
@@ -101,18 +101,13 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
             for (var i = 0; i < count; i++)
             {
                 width += size.x;
-                height = Mathf.Max(height, (int)size.y);
+                height = Mathf.Max(height, size.y);
             }
 
             return new Vector2Int(width, height);
         }
 
-        private void ClearToken()
-        {
-            _cts?.Cancel();
-            _cts?.Dispose();
-            _cts = null;
-        }
+        private void ClearToken() => ClearTokenSupport.ClearToken(ref _cts);
 
         private readonly struct TextureRequest
         {

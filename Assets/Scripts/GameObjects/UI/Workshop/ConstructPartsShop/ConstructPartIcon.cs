@@ -14,17 +14,27 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
         [HideLabel] [SerializeField] RawImage _image;
         [HideLabel] [SerializeField] RectTransform _rectTransform;
 
-        public RawImage Image => _image;
         public Button Button => _button;
         public RectTransform RectTransform => _rectTransform;
 
         public ConstructPartData ConstructPartData { get; set; }
 
-        public RenderTexture ConstructTexture { get; set; }
+        public RenderTexture IconTexture { get; set; }
 
-        public RenderTexture ConstructAtlasTexture { get; set; }
+        public RenderTexture IconAtlasTexture { get; set; }
         public Rect AtlasTextureRect { get; set; }
-        
+
+        public void SetTextureView()
+        {
+            _image.texture = IconTexture;
+        }
+
+        public void SetTextureAtlasView()
+        {
+            _image.texture = IconAtlasTexture;
+            _image.uvRect = AtlasTextureRect;
+        }
+
         private void Reset()
         {
             _button = gameObject.GetComponent<Button>();

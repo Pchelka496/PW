@@ -59,7 +59,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
             }
 
             var renderObject = await GetRenderedPart(partData);
-            _textureCreator.AddDataToQueue(new CameraTextureCreator.RenderTextureData(
+            _textureCreator.AddDataToQueue(new CameraTextureCreator.RenderTextureRequest(
                 renderObject.gameObject,
                 partData.LocalPositionForRenderTexture,
                 partData.RotationForRenderTexture,

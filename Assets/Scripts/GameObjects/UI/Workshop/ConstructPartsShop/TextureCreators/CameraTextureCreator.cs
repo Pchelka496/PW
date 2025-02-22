@@ -11,20 +11,21 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
     public class CameraTextureCreator
     {
         [HideLabel] [SerializeField] Camera _camera;
-
-        readonly Queue<RenderTextureData> _dataQueue = new();
+        
+        readonly Queue<RenderTextureRequest> _dataQueue = new();
         bool _isProcessingQueue;
 
         private void Awake()
         {
             _camera.enabled = false;
+            _camera.gameObject.SetActive(true);
         }
 
-        public void AddDataToQueue(RenderTextureData data)
+        public void AddDataToQueue(RenderTextureRequest request)
         {
-            data.ObjectToRender.SetActive(false);
+            request.ObjectToRender.SetActive(false);
 
-            _dataQueue.Enqueue(data);
+            _dataQueue.Enqueue(request);
 
             if (!_isProcessingQueue)
             {
@@ -32,7 +33,6 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
 
                 if (_camera == null) return;
 
-                _camera.gameObject.SetActive(true);
                 CreateTextureLoop();
             }
         }
@@ -48,7 +48,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
                 var texture = new RenderTexture(data.TextureSize.x, data.TextureSize.y, 16,GraphicsFormat.R8G8B8A8_UNorm);
                 
                 _camera.targetTexture = texture;
-
+                
                 _camera.Render();
 
                 if (data.Callback != null)
@@ -61,24 +61,24 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
                     Debug.LogError($"No callback action in {GetType().Name}");
                 }
 
-                data.ObjectToRender.SetActive(false);
+                //data.ObjectToRender.SetActive(false);
             }
 
             _isProcessingQueue = false;
 
             _camera.targetTexture = null;
-            _camera.gameObject.SetActive(false);
         }
 
-        private void ObjectToRenderSetting(RenderTextureData data)
+        private void ObjectToRenderSetting(RenderTextureRequest request)
         {
-            data.ObjectToRender.SetActive(true);
+            Debug.Log(true);
+            request.ObjectToRender.SetActive(true);
 
-            data.ObjectToRender.transform.SetParent(_camera.transform);
-            data.ObjectToRender.transform.SetLocalPositionAndRotation(data.PositionOffset, data.RotationOffset);
+            request.ObjectToRender.transform.SetParent(_camera.transform);
+            request.ObjectToRender.transform.SetLocalPositionAndRotation(request.PositionOffset, request.RotationOffset);
         }
 
-        public readonly struct RenderTextureData
+        public readonly struct RenderTextureRequest
         {
             public readonly GameObject ObjectToRender;
             public readonly Vector3 PositionOffset;
@@ -86,7 +86,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
             public readonly Vector2Int TextureSize;
             public readonly Action<RenderTexture, GameObject> Callback;
 
-            public RenderTextureData(
+            public RenderTextureRequest(
                 GameObject objectToRender,
                 Vector3 positionOffset,
                 Quaternion rotationOffset,

@@ -9,7 +9,7 @@ namespace ScriptableObjects
         [Space] [SerializeField] AssetReference _prefabReference;
         [Space] [SerializeField] string _partName;
         [Range(0, 100000)] [SerializeField] int _mass;
-        [SerializeField] ConstructPartType _shopType;
+        [SerializeField] EnumConstructPartType _shopType;
 
         [Header("Construct part shop")] //
         [Range(0, 100000), SerializeField]
@@ -21,7 +21,7 @@ namespace ScriptableObjects
         public AssetReference PrefabReference => _prefabReference;
         public string PartName => _partName;
         public int Mass => _mass;
-        public ConstructPartType PartType => _shopType;
+        public EnumConstructPartType ShopType => _shopType;
 
         public int Cost => _cost;
         public Vector3 LocalPositionForRenderTexture => _localPositionForRenderTexture;
@@ -29,11 +29,12 @@ namespace ScriptableObjects
 
         public uint LoadID { get; set; }
 
-        public enum ConstructPartType
+        public enum EnumConstructPartType
         {
             CommandModules,
             Engines,
             Aerodynamics,
+            All = CommandModules | Engines | Aerodynamics
         }
     }
 }

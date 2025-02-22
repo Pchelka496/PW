@@ -80,8 +80,6 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
 
         private void OnTextureAtlasLoaded(RenderTexture texture, Rect[] rects, ConstructPartData[] dataArray)
         {
-            Debug.Log(texture.width);
-
             for (var i = 0; i < dataArray.Length; i++)
             {
                 var icon = _icons[dataArray[i].LoadID];

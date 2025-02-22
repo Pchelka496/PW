@@ -72,7 +72,6 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
                         (float)localX / atlasSize.x, 0,
                         (float)objectSize.x / atlasSize.x, (float)objectSize.y / atlasSize.y);
 
-                await UniTask.WaitForSeconds(1f, cancellationToken: token);
                     _textureCreator.AddDataToQueue(new CameraTextureCreator.RenderTextureRequest(
                         objects[i], request.Positions[i], request.Rotations[i], objectSize, (tex, obj) =>
                         {
@@ -84,9 +83,6 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
                 }
                 await UniTask.WaitUntil(() => remainingTextures == 0, cancellationToken: token);
 
-                await UniTask.WaitForSeconds(2f, cancellationToken: token);
-
-                Debug.Log("All textures rendered"); ///
                 request.Callback?.Invoke(renderTexture, uvRects, objects);
                 RenderTexture.active = null;
                 renderTexture = null;

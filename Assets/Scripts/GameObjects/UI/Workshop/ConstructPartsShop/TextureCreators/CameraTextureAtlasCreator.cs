@@ -66,17 +66,18 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
 
             await UniTask.WaitUntil(() => uvRects.remainingTextures == 0, cancellationToken: token);
 
+            Debug.Log(request.Callback);
             request.Callback?.Invoke(renderTexture, uvRects.rects, objects);
             RenderTexture.active = null;
         }
 
         private RenderTexture CreateRenderTexture(Vector2Int atlasSize)
         {
-            var renderTexture = new RenderTexture(atlasSize.x, atlasSize.y, 16, RenderTextureFormat.ARGB32)
+            var renderTexture = new RenderTexture(atlasSize.x, atlasSize.y, 0, RenderTextureFormat.ARGB32)
             {
                 depthStencilFormat = GraphicsFormat.None
             };
-
+         
             RenderTexture.active = renderTexture;
             GL.Clear(true, true, Color.clear);
 

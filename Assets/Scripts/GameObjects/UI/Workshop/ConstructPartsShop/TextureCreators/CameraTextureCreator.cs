@@ -44,15 +44,6 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
             {
                 var data = _dataQueue.Dequeue();
 
-                // var texture = new RenderTexture(data.TextureSize.x, data.TextureSize.y, 16,
-                //     GraphicsFormat.R8G8B8A8_UNorm);
-                
-                // var renderTexture =
-                //     new RenderTexture(data.TextureSize.x, data.TextureSize.y, 0, RenderTextureFormat.ARGB32)
-                //     {
-                //         depthStencilFormat = GraphicsFormat.None
-                //     };
-                
                 var renderTexture = new RenderTexture(data.TextureSize.x, data.TextureSize.y, 16)
                 {
                     graphicsFormat = GraphicsFormat.R8G8B8A8_UNorm, // Цветовой буфер

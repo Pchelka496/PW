@@ -22,7 +22,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
         ConstructPartData[] _constructPartData;
         ConstructPartCore[] _renderedPart;
         RenderTexture[] _renderTextures;
-        readonly Dictionary<string, TextureAtlasData> _textureAtlases = new();
+        readonly Dictionary<string, TextureAtlasData> _cachedTextureAtlases = new();
 
         [Zenject.Inject]
         private void Construct(
@@ -59,6 +59,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
             }
 
             var renderObject = await GetRenderedPart(partData);
+
             _textureCreator.AddDataToQueue(new CameraTextureCreator.RenderTextureRequest(
                 renderObject.gameObject,
                 partData.LocalPositionForRenderTexture,
@@ -77,7 +78,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
         {
             var key = GetPartsKey(partData);
 
-            if (_textureAtlases.TryGetValue(key, out var cachedAtlas) && !cachedAtlas.IsDefault)
+            if (_cachedTextureAtlases.TryGetValue(key, out var cachedAtlas) && !cachedAtlas.IsDefault)
             {
                 callback?.Invoke(cachedAtlas.RenderTexture, cachedAtlas.Rects, partData);
                 return;
@@ -98,20 +99,26 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
             _atlasCreator.RequestTextureAtlas(renderObjects, _textureSize, positions, rotations,
                 (texture, rects, objs) =>
                 {
-                    var atlasData = new TextureAtlasData(
-                        texture,
-                        rects,
-                        objs.Select(o => (uint)o.GetInstanceID()).ToArray());
+                    CacheAtlas(key, texture, rects, objs);
 
-                    _textureAtlases[key] = atlasData;
-                    callback?.Invoke(atlasData.RenderTexture, atlasData.Rects, partData);
+                    callback?.Invoke(texture, rects, partData);
                 });
+        }
+
+        private void CacheAtlas(string key, RenderTexture texture, Rect[] rects, GameObject[] objs)
+        {
+            var atlasData = new TextureAtlasData(
+                texture,
+                rects,
+                objs.Select(o => (uint)o.GetInstanceID()).ToArray());
+
+            _cachedTextureAtlases[key] = atlasData;
         }
 
         private async UniTask<ConstructPartCore> GetRenderedPart(ConstructPartData partData)
         {
             await UniTask.WaitUntil(() => _renderedPart != null);
-            
+
             if (_renderedPart[partData.LoadID] != null)
             {
                 return _renderedPart[partData.LoadID];

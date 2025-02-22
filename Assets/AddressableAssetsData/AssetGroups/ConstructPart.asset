@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ConstructPart
+  m_EditorClassIdentifier: 
+  m_GroupName: ConstructPart
+  m_GUID: ca0799bcb262e5c4f969fc5ea6b21e64
+  m_SerializeEntries:
+  - m_GUID: 22da89bbdeea6134aad758a48c270df8
+    m_Address: Assets/Resources_moved/Prefab/Construct/Parts/Engine/Engine.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3f4a0da7c321234dbcaed734cabe7e3
+    m_Address: Assets/Resources_moved/Prefab/Construct/Parts/Aerodynamics/Wing.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f31a5a1741d0c3045b95f9b6633e87ac
+    m_Address: Assets/Resources_moved/Prefab/Construct/Parts/CommandModules/ControlModule.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c685de3b4fe47ac478917808d04964cf, type: 2}
+    - {fileID: 11400000, guid: a5607f32f0a050a40a145d332c922ba2, type: 2}

@@ -83,7 +83,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
             for (var i = 0; i < dataArray.Length; i++)
             {
                 var icon = _icons[dataArray[i].LoadID];
-
+            
                 icon.IconAtlasTexture = texture;
                 icon.AtlasTextureRect = rects[i];
                 icon.SetTextureAtlasView();

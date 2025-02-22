@@ -16,7 +16,7 @@ namespace GameObjects.UI
         int[] _fpsBuffer;
         int _fpsBufferIndex;
 
-        public int AverageFPS { get; set; }
+        public int AverageFPS { get; private set; }
         public int HighestPfs { get; private set; }
         public int LowersFPS { get; private set; }
 

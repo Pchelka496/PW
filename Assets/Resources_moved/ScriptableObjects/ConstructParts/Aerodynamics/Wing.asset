@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dfbe0702833c724ba514f7ab30db08a, type: 3}
-  m_Name: FirstPart 1
+  m_Name: Wing
   m_EditorClassIdentifier: 
   _prefabReference:
     m_AssetGUID: c3f4a0da7c321234dbcaed734cabe7e3
@@ -18,7 +18,7 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  _partName: 1
+  _partName: fd
   _mass: 50
   _shopType: 2
   _cost: 1275

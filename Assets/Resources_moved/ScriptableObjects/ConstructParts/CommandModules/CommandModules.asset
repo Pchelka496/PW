@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dfbe0702833c724ba514f7ab30db08a, type: 3}
-  m_Name: FirstPart 3
+  m_Name: CommandModules
   m_EditorClassIdentifier: 
   _prefabReference:
-    m_AssetGUID: c3f4a0da7c321234dbcaed734cabe7e3
+    m_AssetGUID: f31a5a1741d0c3045b95f9b6633e87ac
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  _partName: 3
+  _partName: 2
   _mass: 50
-  _shopType: 2
+  _shopType: 0
   _cost: 1275
   _localPositionForRenderTexture: {x: 0, y: 0, z: 2}
   _rotationForRenderTexture: {x: 0, y: 0, z: 0, w: 0}

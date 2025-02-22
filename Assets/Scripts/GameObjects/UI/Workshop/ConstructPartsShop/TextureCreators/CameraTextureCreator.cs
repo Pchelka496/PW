@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Nenn.InspectorEnhancements.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -11,7 +12,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
     public class CameraTextureCreator
     {
         [HideLabel] [SerializeField] Camera _camera;
-        
+
         readonly Queue<RenderTextureRequest> _dataQueue = new();
         bool _isProcessingQueue;
 
@@ -33,35 +34,51 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
 
                 if (_camera == null) return;
 
-                CreateTextureLoop();
+                CreateTextureLoop().Forget();
             }
         }
 
-        private void CreateTextureLoop()
+        private async UniTaskVoid CreateTextureLoop()
         {
             while (_dataQueue.Count > 0)
             {
                 var data = _dataQueue.Dequeue();
 
+                // var texture = new RenderTexture(data.TextureSize.x, data.TextureSize.y, 16,
+                //     GraphicsFormat.R8G8B8A8_UNorm);
+                
+                // var renderTexture =
+                //     new RenderTexture(data.TextureSize.x, data.TextureSize.y, 0, RenderTextureFormat.ARGB32)
+                //     {
+                //         depthStencilFormat = GraphicsFormat.None
+                //     };
+                
+                var renderTexture = new RenderTexture(data.TextureSize.x, data.TextureSize.y, 16)
+                {
+                    graphicsFormat = GraphicsFormat.R8G8B8A8_UNorm, // Цветовой буфер
+                    depthStencilFormat = GraphicsFormat.D16_UNorm, // Буфер глубины
+                    anisoLevel = 0
+                };
+
+                _camera.targetTexture = renderTexture;
+
                 ObjectToRenderSetting(data);
 
-                var texture = new RenderTexture(data.TextureSize.x, data.TextureSize.y, 16,GraphicsFormat.R8G8B8A8_UNorm);
-                
-                _camera.targetTexture = texture;
-                
                 _camera.Render();
+
+                await UniTask.WaitForEndOfFrame();
 
                 if (data.Callback != null)
                 {
-                    data.Callback.Invoke(texture, data.ObjectToRender);
+                    data.Callback.Invoke(renderTexture, data.ObjectToRender);
                 }
                 else
                 {
-                    Object.Destroy(texture);
+                    Object.Destroy(renderTexture);
                     Debug.LogError($"No callback action in {GetType().Name}");
                 }
 
-                //data.ObjectToRender.SetActive(false);
+                data.ObjectToRender.SetActive(false);
             }
 
             _isProcessingQueue = false;
@@ -71,11 +88,11 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
 
         private void ObjectToRenderSetting(RenderTextureRequest request)
         {
-            Debug.Log(true);
-            request.ObjectToRender.SetActive(true);
-
             request.ObjectToRender.transform.SetParent(_camera.transform);
-            request.ObjectToRender.transform.SetLocalPositionAndRotation(request.PositionOffset, request.RotationOffset);
+            request.ObjectToRender.transform.SetLocalPositionAndRotation(request.PositionOffset,
+                request.RotationOffset);
+
+            request.ObjectToRender.SetActive(true);
         }
 
         public readonly struct RenderTextureRequest

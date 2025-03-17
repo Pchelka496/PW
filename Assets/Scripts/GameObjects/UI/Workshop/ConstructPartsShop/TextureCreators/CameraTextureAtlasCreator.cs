@@ -49,73 +49,50 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
             while (_requestsQueue.Count > 0)
             {
                 var request = _requestsQueue.Dequeue();
-                await ProcessRequest(request, token);
+                var objects = request.Objects;
+                var textureSize = request.TextureSize;
+                var remainingTextures = objects.Length;
+
+                var atlasSize = CalculateAtlasSize(textureSize, objects.Length);
+                
+                var renderTexture = new RenderTexture(atlasSize.x, atlasSize.y, 0, RenderTextureFormat.ARGB32);
+                renderTexture.depthStencilFormat = GraphicsFormat.None;
+                
+                RenderTexture.active = renderTexture;
+                GL.Clear(true, true, Color.clear);
+
+                var uvRects = new Rect[objects.Length];
+                var xOffset = 0;
+
+                for (int i = 0; i < objects.Length; i++)
+                {
+                    var objectSize = textureSize;
+                    var localX = xOffset;
+                    var localY = 0;
+                    xOffset += objectSize.x;
+
+                    uvRects[i] = new Rect(
+                        (float)localX / atlasSize.x, 0,
+                        (float)objectSize.x / atlasSize.x, (float)objectSize.y / atlasSize.y);
+
+                    _textureCreator.AddDataToQueue(new CameraTextureCreator.RenderTextureRequest(
+                        objects[i], request.Positions[i], request.Rotations[i], objectSize, (tex, obj) =>
+                        {
+                            Graphics.CopyTexture(tex, 0, 0, 0, 0, objectSize.x, objectSize.y, renderTexture, 0, 0,
+                                localX, localY);
+                            tex.Release();
+                            remainingTextures--;
+                        }));
+                }
+
+                await UniTask.WaitUntil(() => remainingTextures == 0, cancellationToken: token);
+
+                request.Callback?.Invoke(renderTexture, uvRects, objects);
+                RenderTexture.active = null;
+                renderTexture = null;
             }
 
             ClearToken();
-        }
-
-        private async UniTask ProcessRequest(TextureRequest request, CancellationToken token)
-        {
-            var objects = request.Objects;
-            var textureSize = request.TextureSize;
-            var atlasSize = CalculateAtlasSize(textureSize, objects.Length);
-
-            var renderTexture = CreateRenderTexture(atlasSize);
-            var uvRects = RenderObjectsToTexture(request, renderTexture, atlasSize, textureSize);
-
-            await UniTask.WaitUntil(() => uvRects.remainingTextures == 0, cancellationToken: token);
-
-            Debug.Log(request.Callback);
-            request.Callback?.Invoke(renderTexture, uvRects.rects, objects);
-            RenderTexture.active = null;
-        }
-
-        private RenderTexture CreateRenderTexture(Vector2Int atlasSize)
-        {
-            var renderTexture = new RenderTexture(atlasSize.x, atlasSize.y, 0, RenderTextureFormat.ARGB32)
-            {
-                depthStencilFormat = GraphicsFormat.None
-            };
-         
-            RenderTexture.active = renderTexture;
-            GL.Clear(true, true, Color.clear);
-
-            return renderTexture;
-        }
-
-        private (Rect[] rects, int remainingTextures) RenderObjectsToTexture(
-            in TextureRequest request,
-            RenderTexture renderTexture,
-            Vector2Int atlasSize,
-            Vector2Int textureSize)
-        {
-            var objects = request.Objects;
-            var uvRects = new Rect[objects.Length];
-            int remainingTextures = objects.Length;
-            int xOffset = 0;
-
-            for (int i = 0; i < objects.Length; i++)
-            {
-                var localX = xOffset;
-                var localY = 0;
-                xOffset += textureSize.x;
-
-                uvRects[i] = new Rect(
-                    (float)localX / atlasSize.x, 0,
-                    (float)textureSize.x / atlasSize.x, (float)textureSize.y / atlasSize.y);
-
-                _textureCreator.AddDataToQueue(new CameraTextureCreator.RenderTextureRequest(
-                    objects[i], request.Positions[i], request.Rotations[i], textureSize, (tex, obj) =>
-                    {
-                        Graphics.CopyTexture(tex, 0, 0, 0, 0, textureSize.x, textureSize.y, renderTexture, 0, 0,
-                            localX, localY);
-                        tex.Release();
-                        remainingTextures--;
-                    }));
-            }
-
-            return (uvRects, remainingTextures);
         }
 
         private Vector2Int CalculateAtlasSize(Vector2Int size, int count)

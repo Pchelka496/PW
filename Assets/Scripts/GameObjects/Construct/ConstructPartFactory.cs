@@ -15,12 +15,21 @@ namespace GameObjects.Construct
             _dataLoader = dataLoader;
         }
 
-        public async UniTask<ConstructPartCore> GetConstructPart(ConstructPartData data)
+        public async UniTask<ConstructPartCore> GetConstructPartPrefab(ConstructPartData data)
         {
             var handle =
                 await Additional.AddressableLouderHelper.LoadAssetAsync<GameObject>(data.PrefabReference);
 
             return handle.Result.GetComponent<ConstructPartCore>();
+        }
+
+        public async UniTask<ConstructPartPlacementComponent> GetConstructPartPlacementComponentPrefab(
+            ConstructPartData data)
+        {
+            var handle =
+                await Additional.AddressableLouderHelper.LoadAssetAsync<GameObject>(data.PrefabReference);
+            
+            return handle.Result.GetComponent<ConstructPartPlacementComponent>();
         }
     }
 }

@@ -1,15 +1,13 @@
-using System;
-using System.Threading;
-using Additional;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GameObjects.CameraControllers.Workshop
 {
     public class WorkshopCameraController : MonoBehaviour
     {
-        [SerializeField] OrbitalFollowController _orbitalFollowController;
-        [FormerlySerializedAs("_cameraTrackingTargetController")] [SerializeField] CameraMovementController _cameraMovementController;
+        [SerializeField] OrbitalFollowController _orbitalFollowController; 
+        [SerializeField] CameraMovementController _cameraMovementController;
+
+        public CameraMovementController MovementController => _cameraMovementController;
 
         private void Reset()
         {

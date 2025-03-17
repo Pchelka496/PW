@@ -124,7 +124,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators
                 return _renderedPart[partData.LoadID];
             }
 
-            var renderedPart = Instantiate(await _constructPartFactory.GetConstructPart(partData));
+            var renderedPart = Instantiate(await _constructPartFactory.GetConstructPartPrefab(partData));
             _renderedPart[partData.LoadID] = renderedPart;
 
             return renderedPart;

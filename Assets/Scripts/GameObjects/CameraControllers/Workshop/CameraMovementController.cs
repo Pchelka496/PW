@@ -26,7 +26,7 @@ namespace GameObjects.CameraControllers.Workshop
 
         [Header("Camera speed Settings")] [Range(0f, float.MaxValue)] [SerializeField]
         float _maxMoveSpeed = 20f;
-        
+
         [Range(0f, float.MaxValue)] [SerializeField]
         float _mouseControlsMaxMoveSpeed = 40f;
         
@@ -42,14 +42,16 @@ namespace GameObjects.CameraControllers.Workshop
 
         private Func<float> _getMaxMoveSpeed;
         Func<Vector3> _inputValue;
+
         event Action SubscribeEvents;
         event Action DisposeEvents;
 
         CancellationTokenSource _moveCts;
+        
+        public CameraBorders CameraBorder => _borders;
 
 #if UNITY_EDITOR
         [field: SerializeField] public bool VisualizeBorders { get; private set; }
-        public CameraBorders CameraBorder => _borders;
         public float CameraMoveRadius => _orbitalFollow.Radius;
         public float MinDistanceToReduceSpeed => _minDistanceToReduceSpeed;
 #endif
@@ -242,7 +244,7 @@ namespace GameObjects.CameraControllers.Workshop
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private (Vector3 minPositions, Vector3 maxPositions) GetLimitPositions()
+        public (Vector3 minPositions, Vector3 maxPositions) GetLimitPositions()
         {
             var minX = _borders.LeftBorder.position.x + _cameraMoveRadius;
             var maxX = _borders.RightBorder.position.x - _cameraMoveRadius;
@@ -256,15 +258,15 @@ namespace GameObjects.CameraControllers.Workshop
             return (new(minX, minY, minZ), new(maxX, maxY, maxZ));
         }
 
-        // [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        // private void ClampPositionWithinBorders(ref Vector3 position)
-        // {
-        //     var (minPositions, maxPositions) = GetLimitPositions();
-        //
-        //     position.x = Mathf.Clamp(position.x, minPositions.x, maxPositions.x);
-        //     position.y = Mathf.Clamp(position.y, minPositions.y, maxPositions.y);
-        //     position.z = Mathf.Clamp(position.z, minPositions.z, maxPositions.z);
-        // }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void ClampPositionWithinCameraBorders(ref Vector3 position)
+        {
+            var (minPositions, maxPositions) = GetLimitPositions();
+        
+            position.x = Mathf.Clamp(position.x, minPositions.x, maxPositions.x);
+            position.y = Mathf.Clamp(position.y, minPositions.y, maxPositions.y);
+            position.z = Mathf.Clamp(position.z, minPositions.z, maxPositions.z);
+        }
 
         private void ClearToken() => ClearTokenSupport.ClearToken(ref _moveCts);
 
@@ -290,7 +292,7 @@ namespace GameObjects.CameraControllers.Workshop
         }
 
         [Serializable]
-        public record CameraBorders
+        public struct CameraBorders
         {
             [Required] public Transform UpBorder;
             [Required] public Transform DownBorder;

@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using GameObjects.Command;
+using GameObjects.Command.Commands;
+using GameObjects.Construct;
 using GameObjects.UI.Workshop.ConstructPartsShop.TextureCreators;
 using ScriptableObjects;
 using UnityEngine;
@@ -11,6 +15,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
 {
     public class ConstructPartsShopPage
     {
+        static ConstructPartFactory _constructPartFactory;
         RectTransform _content;
         PageCharacteristics _pageCharacteristics;
         ConstructPartTextureManager _constructPartTextureManager;
@@ -35,9 +40,12 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
         }
 
         [Zenject.Inject]
-        private void Construct(ConstructPartTextureManager constructPartTextureManager)
+        private void Construct(
+            ConstructPartTextureManager constructPartTextureManager,
+            ConstructPartFactory constructPartFactory)
         {
             _constructPartTextureManager = constructPartTextureManager;
+            _constructPartFactory = constructPartFactory;
         }
 
         public void Initialize(Initializer initializer)
@@ -83,7 +91,7 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
             for (var i = 0; i < dataArray.Length; i++)
             {
                 var icon = _icons[dataArray[i].LoadID];
-            
+
                 icon.IconAtlasTexture = texture;
                 icon.AtlasTextureRect = rects[i];
                 icon.SetTextureAtlasView();
@@ -114,29 +122,27 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
                 _ => iconsList
             };
 
-            float iconSize = _pageCharacteristics.IconSize;
-            float offset = _pageCharacteristics.DistanceBetweenIcons;
+            var iconSize = _pageCharacteristics.IconSize;
+            var offset = _pageCharacteristics.DistanceBetweenIcons;
 
-            float totalIconSize = iconSize + offset;
-            float contentWidth = _content.rect.width;
+            var totalIconSize = iconSize + offset;
+            var contentWidth = _content.rect.width;
 
-            // Количество колонок, чтобы иконки не выходили за границы
-            int columns = Mathf.Max(1, Mathf.FloorToInt((contentWidth - offset) / totalIconSize));
+            var columns = Mathf.Max(1, Mathf.FloorToInt((contentWidth - offset) / totalIconSize));
 
-            // Привязываем контент к верхней границе и фиксируем его позицию
             _content.anchorMin = new Vector2(0, 1);
             _content.anchorMax = new Vector2(1, 1);
             _content.pivot = new Vector2(0.5f, 1);
             _content.anchoredPosition = new Vector2(0, 0);
 
-            int index = 0;
+            var index = 0;
             foreach (var icon in sortedIcons)
             {
-                int row = index / columns;
-                int col = index % columns;
+                var row = index / columns;
+                var col = index % columns;
 
-                float posX = (iconSize / 2 + offset) + col * totalIconSize;
-                float posY = -((iconSize / 2 + offset) + row * totalIconSize);
+                var posX = (iconSize / 2 + offset) + col * totalIconSize;
+                var posY = -((iconSize / 2 + offset) + row * totalIconSize);
 
                 icon.RectTransform.anchorMin = new Vector2(0, 1);
                 icon.RectTransform.anchorMax = new Vector2(0, 1);
@@ -148,11 +154,9 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
                 index++;
             }
 
-            // Финальная высота контейнера
-            int totalRows = Mathf.CeilToInt(_icons.Count / (float)columns);
-            float totalHeight = totalRows * totalIconSize + offset;
+            var totalRows = Mathf.CeilToInt(_icons.Count / (float)columns);
+            var totalHeight = totalRows * totalIconSize + offset;
 
-            // Меняем sizeDelta, чтобы высота увеличивалась вниз
             _content.sizeDelta = new Vector2(_content.sizeDelta.x, totalHeight);
         }
 
@@ -170,7 +174,18 @@ namespace GameObjects.UI.Workshop.ConstructPartsShop
 
         private void OnIconClicked(ConstructPartIcon clickedIcon)
         {
-            Debug.Log(clickedIcon);
+            CreatePlacementCommand(clickedIcon.ConstructPartData).Forget();
+        }
+
+        private async UniTaskVoid CreatePlacementCommand(ConstructPartData constructPartData)
+        {
+            var constructPartPlacementComponentPrefab =
+                await _constructPartFactory.GetConstructPartPlacementComponentPrefab(constructPartData);
+            
+            var startPlacement =
+                new CommandConstructPartStartPlacement(Object.Instantiate(constructPartPlacementComponentPrefab));
+            
+            CommandProcessor<CommandConstructPartStartPlacement>.ExecuteCommand(startPlacement);
         }
 
         [System.Serializable]

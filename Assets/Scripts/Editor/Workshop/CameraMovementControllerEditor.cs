@@ -19,7 +19,7 @@ public static class CameraBordersDrawer
         var controllers = Object.FindObjectsOfType<CameraMovementController>();
         foreach (var controller in controllers)
         {
-            if (controller == null || !controller.VisualizeBorders || controller.CameraBorder == null)
+            if (controller == null || !controller.VisualizeBorders)
                 continue;
 
             DrawBorders(controller);

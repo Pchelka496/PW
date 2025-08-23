@@ -14,22 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Scene
   m_GUID: b3e3dc8db02730d43971cc358b539af2
-  m_SerializeEntries:
-  - m_GUID: 0baec75b34aba1e46b95dd25bc9fb390
-    m_Address: Assets/Resources_moved/Scene/CompanyMap.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 99c9720ab356a0642a771bea13969a05
-    m_Address: Assets/Resources_moved/Scene/OpenWorld.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e00393abc6ec50a46beb60a7bece479e
-    m_Address: Assets/Resources_moved/Scene/CreatingConstruct.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}
   m_SchemaSet:

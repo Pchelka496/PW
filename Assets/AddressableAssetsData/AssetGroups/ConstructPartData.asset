@@ -14,27 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: ConstructPartData
   m_GUID: b954555d44925de48b58f42085020e4e
-  m_SerializeEntries:
-  - m_GUID: 0cba263b0eb32164ba6083abf1c475fc
-    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
-      2.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ConstructPartData
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 618e771be974f374588df5588ba61c69
-    m_Address: Assets/ScriptableObjects/ConstructParts/FirstPart.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ConstructPartData
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6d5f13ef2efccaa489b32c4e512e73b6
-    m_Address: Assets/Resources_moved/ScriptableObjects/ConstructParts/FirstPart
-      1.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ConstructPartData
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}
   m_SchemaSet:

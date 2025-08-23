@@ -14,12 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: ConstructPartMaterials
   m_GUID: 6b0707633017e514eaa9927a91059125
-  m_SerializeEntries:
-  - m_GUID: 02b97be8b6aef0e4abe4130858da328d
-    m_Address: Assets/Resources_moved/Art/Materials/ConstructPart/Aerodynamics/Aerodynamics.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}
   m_SchemaSet:

@@ -14,22 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: ConstructPart
   m_GUID: ca0799bcb262e5c4f969fc5ea6b21e64
-  m_SerializeEntries:
-  - m_GUID: 22da89bbdeea6134aad758a48c270df8
-    m_Address: Assets/Resources_moved/Prefab/Construct/Parts/Engine/Engine.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c3f4a0da7c321234dbcaed734cabe7e3
-    m_Address: Assets/Resources_moved/Prefab/Construct/Parts/Aerodynamics/Wing.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f31a5a1741d0c3045b95f9b6633e87ac
-    m_Address: Assets/Resources_moved/Prefab/Construct/Parts/CommandModules/ControlModule.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 68247f9a0783f4b47a9ed8768a5eea1e, type: 2}
   m_SchemaSet:

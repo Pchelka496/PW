@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.cysharp.unitask": {
-      "version": "https://github.com/Cysharp/UniTask.git?path=/src/UniTask/Assets/Plugins/UniTask",
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask#2.1.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "8042b29ff87dd5506d7aad72bd6d8d7405985f27"
+      "hash": "52cdadc03519a86af7d80fa2f60dbe684acf247e"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
